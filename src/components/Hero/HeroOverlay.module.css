@@ -1,0 +1,198 @@
+.overlay {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  pointer-events: none;
+}
+
+.overlay > * { pointer-events: auto; }
+
+.inner {
+  max-width: 900px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.4rem;
+}
+
+/* Status badge */
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 1rem;
+  border-radius: 999px;
+  background: #00ff8812;
+  border: 1px solid #00ff8830;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  color: var(--glow-green);
+  animation: fadeDown 0.8s ease both;
+}
+
+.statusDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--glow-green);
+  box-shadow: 0 0 8px var(--glow-green);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 8px var(--glow-green); }
+  50% { box-shadow: 0 0 20px var(--glow-green), 0 0 40px #00ff8840; }
+}
+
+/* Title */
+.title {
+  font-family: var(--font-mono);
+  font-size: clamp(2.5rem, 6.5vw, 6rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  min-height: 1.1em;
+  animation: fadeDown 0.9s ease 0.2s both;
+}
+
+.typewriter {
+  background: linear-gradient(160deg, #ffffff 0%, #ccffdd 30%, #00ff88 60%, #00cc6a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 40px #00ff8840);
+}
+
+.cursor {
+  -webkit-text-fill-color: var(--glow-green);
+  opacity: 1;
+  animation: blink 0.9s step-end infinite;
+  margin-left: 2px;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Subtitle */
+.subtitle {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: var(--text-secondary);
+  max-width: 680px;
+  line-height: 1.75;
+  letter-spacing: 0.01em;
+  animation: fadeDown 0.9s ease 0.4s both;
+}
+
+/* CTA buttons */
+.cta {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  animation: fadeDown 0.9s ease 0.6s both;
+}
+
+/* Micro stats */
+.microStats {
+  display: flex;
+  gap: 3rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 0.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-subtle);
+  width: 100%;
+  animation: fadeDown 0.9s ease 0.8s both;
+}
+
+.microStat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.microNum {
+  font-family: var(--font-mono);
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--glow-green);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  text-shadow: 0 0 24px #00ff8840;
+}
+
+.microLabel {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* Scroll hint */
+.scrollHint {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  animation: fadeDown 1s ease 1.2s both;
+  pointer-events: none;
+}
+
+.scrollHint span {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.scrollMouse {
+  width: 22px;
+  height: 36px;
+  border: 1.5px solid #00ff8844;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  padding-top: 6px;
+}
+
+.scrollWheel {
+  width: 3px;
+  height: 8px;
+  background: var(--glow-green);
+  border-radius: 2px;
+  animation: scrollAnim 1.8s ease-in-out infinite;
+  box-shadow: 0 0 6px var(--glow-green);
+}
+
+@keyframes scrollAnim {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(14px); opacity: 0; }
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+  .microStats { gap: 1.5rem; }
+  .cta { flex-direction: column; align-items: center; }
+  .title { font-size: 2.2rem; }
+}
