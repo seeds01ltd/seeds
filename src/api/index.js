@@ -1,7 +1,15 @@
 // ============================================================
-// API Abstraction Layer — mock-production implementation
-// Swap the body of each method with a real fetch/axios call
-// when the backend is ready. Signatures remain identical.
+// API Abstraction Layer
+// ============================================================
+// To swap from mock data to real Supabase/Express backend:
+//
+//   1. Delete the `import * as X from '../data/X'` lines below
+//   2. Replace each method body with a real fetch/axios call
+//      — Signatures stay identical, consumers need no changes
+//   3. Example swap:
+//        Before: getAll: async () => { ... return servicesData.getAll(); }
+//        After:  getAll: async () => { const r=await fetch('/api/services'); return r.json(); }
+//   4. Remove `backend/prisma/seed.ts` when Supabase replaces it
 // ============================================================
 
 import * as servicesData  from '../data/services';
