@@ -219,7 +219,7 @@ export default function Home() {
       <section style={{ background: 'var(--bg-base)' }}>
         <div className="section">
           <SectionReveal>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '5rem', alignItems: 'center' }}>
+            <div className="grid-2 home-about-grid">
               <div>
                 <span className="section-eyebrow">About Seed</span>
                 <h2 className="section-title">Engineering-first,<br /><span>always.</span></h2>
@@ -250,7 +250,7 @@ export default function Home() {
               </div>
 
               {/* Stats panel */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+              <div className="grid-2 home-stats-grid">
                 {[
                   { num: 200, suf: '+', label: 'Senior Engineers', color: '#818cf8' },
                   { num: 500, suf: '+', label: 'Projects Shipped', color: '#60a5fa' },

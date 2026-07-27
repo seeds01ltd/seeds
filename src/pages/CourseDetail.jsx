@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import api from '../api';
 import { db } from '../data/db';
 import SectionReveal from '../components/UI/SectionReveal';
-import { ArrowLeft, Clock, Users, BookOpen, GraduationCap, CheckCircle, Circle, Play } from 'lucide-react';
+import { ArrowLeft, Clock, Users, BookOpen, GraduationCap, CheckCircle, Circle, Play, ChevronDown } from 'lucide-react';
 
 const LEVEL_COLORS = {
   Beginner: '#34d399',
@@ -18,6 +18,7 @@ export default function CourseDetail() {
   const [enrolled, setEnrolled] = useState(false);
   const [progress, setProgress] = useState(0);
   const [completedLessons, setCompletedLessons] = useState([]);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     api.courses.getBySlug(slug).then(d => {
@@ -42,6 +43,46 @@ export default function CourseDetail() {
     setProgress(0);
   };
 
+  const sidebarContent = (
+    <div style={{ background: 'var(--bg-surface)', padding: '2rem', borderRadius: 'var(--r-lg)', border: '1px solid var(--border-subtle)', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+      <div>
+        <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.75rem', borderBottom: '1px solid var(--border-subtle)', paddingBottom: '0.5rem' }}>Instructor</h3>
+        <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, color: 'var(--text-primary)', fontSize: '1rem' }}>{course.instructor}</div>
+        <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>{course.instructorRole}</div>
+      </div>
+
+      <div>
+        <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.75rem', borderBottom: '1px solid var(--border-subtle)', paddingBottom: '0.5rem' }}>Topics</h3>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+          {(course.topics || []).map(t => (
+            <div key={t} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <span style={{ width: 6, height: 6, borderRadius: '50%', background: LEVEL_COLORS[course.level] }} />
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.82rem', color: 'var(--text-secondary)' }}>{t}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.75rem', borderBottom: '1px solid var(--border-subtle)', paddingBottom: '0.5rem' }}>Details</h3>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+            <BookOpen size={16} style={{ color: 'var(--indigo-light)' }} /> {lessons.length} lessons
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+            <Clock size={16} style={{ color: 'var(--indigo-light)' }} /> {course.duration}
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+            <Users size={16} style={{ color: 'var(--indigo-light)' }} /> {(course.students || 0).toLocaleString()} students
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+            <GraduationCap size={16} style={{ color: 'var(--indigo-light)' }} /> {course.level}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="page-wrapper">
       <div className="page-hero" style={{ position: 'relative', overflow: 'hidden' }}>
@@ -49,7 +90,7 @@ export default function CourseDetail() {
         <Link to="/courses" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-muted)', textDecoration: 'none', marginBottom: '2rem', fontSize: '0.9rem', position: 'relative', zIndex: 1 }}>
           <ArrowLeft size={16} /> Back to Courses
         </Link>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem', flexWrap: 'wrap' }}>
           <span className="badge" style={{
             background: `${LEVEL_COLORS[course.level]}15`,
             border: `1px solid ${LEVEL_COLORS[course.level]}25`,
@@ -152,44 +193,18 @@ export default function CourseDetail() {
                 </div>
               </div>
 
-              {/* Sidebar */}
-              <div>
-                <div style={{ background: 'var(--bg-surface)', padding: '2rem', borderRadius: 'var(--r-lg)', border: '1px solid var(--border-subtle)', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                  <div>
-                    <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.75rem', borderBottom: '1px solid var(--border-subtle)', paddingBottom: '0.5rem' }}>Instructor</h3>
-                    <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, color: 'var(--text-primary)', fontSize: '1rem' }}>{course.instructor}</div>
-                    <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>{course.instructorRole}</div>
-                  </div>
-
-                  <div>
-                    <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.75rem', borderBottom: '1px solid var(--border-subtle)', paddingBottom: '0.5rem' }}>Topics</h3>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                      {(course.topics || []).map(t => (
-                        <div key={t} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                          <span style={{ width: 6, height: 6, borderRadius: '50%', background: LEVEL_COLORS[course.level] }} />
-                          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.82rem', color: 'var(--text-secondary)' }}>{t}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.75rem', borderBottom: '1px solid var(--border-subtle)', paddingBottom: '0.5rem' }}>Details</h3>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-                        <BookOpen size={16} style={{ color: 'var(--indigo-light)' }} /> {lessons.length} lessons
-                      </div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-                        <Clock size={16} style={{ color: 'var(--indigo-light)' }} /> {course.duration}
-                      </div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-                        <Users size={16} style={{ color: 'var(--indigo-light)' }} /> {(course.students || 0).toLocaleString()} students
-                      </div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-                        <GraduationCap size={16} style={{ color: 'var(--indigo-light)' }} /> {course.level}
-                      </div>
-                    </div>
-                  </div>
+              {/* Sidebar toggle for mobile */}
+              <div className="course-sidebar">
+                <button
+                  className="btn btn-outline btn-sm course-sidebar-toggle"
+                  onClick={() => setSidebarOpen(o => !o)}
+                  style={{ width: '100%', justifyContent: 'space-between', marginBottom: '1rem', display: 'none' }}
+                >
+                  Course Details
+                  <ChevronDown size={16} style={{ transform: sidebarOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+                </button>
+                <div className={`course-sidebar-content ${sidebarOpen ? 'open' : ''}`}>
+                  {sidebarContent}
                 </div>
               </div>
             </div>

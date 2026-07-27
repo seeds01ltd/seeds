@@ -38,7 +38,7 @@ export default function About() {
       {/* Stats */}
       <section style={{ background: 'var(--bg-surface)' }}>
         <div className="section section-xs" style={{ paddingTop: '3rem', paddingBottom: '3rem' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: '1.5rem' }}>
+          <div className="grid-6">
             {STATS.map(s => (
               <div key={s.label} style={{ textAlign: 'center' }}>
                 <div style={{ fontFamily: 'var(--font-heading)', fontSize: '2rem', fontWeight: 800, letterSpacing: '-0.04em', color: s.color }}>
@@ -60,7 +60,7 @@ export default function About() {
               Engineering-first,<br /><span>always.</span>
             </h2>
           </SectionReveal>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }}>
+          <div className="grid-3">
             {VALUES.map((v, i) => (
               <SectionReveal key={v.title} delay={i * 0.1}>
                 <div className="card" style={{ height: '100%' }}>

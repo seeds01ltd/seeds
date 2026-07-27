@@ -37,7 +37,7 @@ const COLS = [
   },
 ];
 
-const TECH_STACK = ['React', 'Node.js', 'Python', 'Rust', 'Go', 'Kubernetes', 'AWS', 'TensorFlow'];
+
 
 export default function Footer() {
   return (
@@ -66,14 +66,7 @@ export default function Footer() {
               ISO 27001 Certified
             </span>
           </div>
-          <div className={styles.techStack}>
-            <p className={styles.techLabel}>Core Stack</p>
-            <div className={styles.techPills}>
-              {TECH_STACK.map(t => (
-                <span key={t} className={styles.techPill}>{t}</span>
-              ))}
-            </div>
-          </div>
+
         </div>
 
         {/* Link columns */}
@@ -93,7 +86,7 @@ export default function Footer() {
 
       {/* Bottom bar */}
       <div className={styles.bottom}>
-        <p>© 2026 Seed Software Development Ltd. Registered in Nigeria · RC No. 2035482</p>
+        <p>&copy; 2026 Seeds Software Development</p>
         <div className={styles.bottomLinks}>
           <Link to="/legal/privacy">Privacy Policy</Link>
           <Link to="/legal/terms">Terms of Service</Link>

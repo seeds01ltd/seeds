@@ -43,7 +43,7 @@ export default function Blog() {
                       onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}
                     >
                       {/* Featured image */}
-                      <div style={{ width: 340, flexShrink: 0, minHeight: 280, overflow: 'hidden', position: 'relative' }}>
+                      <div style={{ width: 340, maxWidth: '100%', flexShrink: 0, minHeight: 280, overflow: 'hidden', position: 'relative' }}>
                         {featured.image ? (
                           <img
                             src={featured.image}

@@ -20,7 +20,7 @@ export default function Pricing() {
 
       <div style={{ background: 'var(--bg-base)' }}>
         <div className="section" style={{ paddingTop: '2rem' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem', alignItems: 'stretch' }}>
+          <div className="grid-3" style={{ alignItems: 'stretch' }}>
             {plans.map((plan, i) => (
               <SectionReveal key={plan.name} delay={i * 0.1}>
                 <div className={`pricing-card ${plan.featured ? 'featured' : ''}`} style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>

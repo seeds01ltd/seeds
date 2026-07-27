@@ -61,7 +61,7 @@ export default function Courses() {
                 <SectionReveal key={course.slug} delay={i * 0.07}>
                   <Link to={`/courses/${course.slug}`} style={{ textDecoration: 'none', display: 'block', height: '100%' }}>
                     <div className="service-card" style={{ height: '100%' }}>
-                      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem', marginBottom: '0.5rem' }}>
+                      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem', marginBottom: '0.5rem', flexWrap: 'wrap' }}>
                         <div className="service-title">{course.title}</div>
                         <span className="badge" style={{
                           background: `${LEVEL_COLORS[course.level]}15`,
@@ -85,7 +85,7 @@ export default function Courses() {
                           </span>
                         )}
                       </div>
-                      <div style={{ display: 'flex', gap: '1.25rem', borderTop: '1px solid var(--border-subtle)', paddingTop: '0.75rem', marginTop: 'auto' }}>
+                      <div style={{ display: 'flex', gap: '1.25rem', borderTop: '1px solid var(--border-subtle)', paddingTop: '0.75rem', marginTop: 'auto', flexWrap: 'wrap' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.78rem', color: 'var(--text-muted)' }}>
                           <BookOpen size={14} /> {course.lessonsCount} lessons
                         </div>

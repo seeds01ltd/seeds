@@ -1,9 +1,7 @@
 import { useEffect, useRef } from 'react';
 
-/**
- * Custom cursor component — green glowing dot that follows the mouse.
- * A larger ring follows with slight lag for a premium feel.
- */
+const isTouchDevice = () => 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
 export default function CustomCursor() {
   const dotRef  = useRef(null);
   const ringRef = useRef(null);
@@ -12,16 +10,16 @@ export default function CustomCursor() {
   const rafRef  = useRef(null);
 
   useEffect(() => {
+    if (isTouchDevice()) return;
+
     const onMove = (e) => {
       pos.current = { x: e.clientX, y: e.clientY };
     };
 
     const animate = () => {
-      // Dot follows exactly
       if (dotRef.current) {
         dotRef.current.style.transform = `translate(${pos.current.x - 4}px, ${pos.current.y - 4}px)`;
       }
-      // Ring follows with lag
       ring.current.x += (pos.current.x - ring.current.x) * 0.12;
       ring.current.y += (pos.current.y - ring.current.y) * 0.12;
       if (ringRef.current) {
@@ -32,15 +30,14 @@ export default function CustomCursor() {
 
     window.addEventListener('mousemove', onMove);
 
-    // Hover effects via event delegation
     const onOver = (e) => {
-      if (e.target.matches('a, button, [role="button"]')) {
+      if (e.target.matches('a, button, [role="button"], input, textarea, select')) {
         dotRef.current?.classList.add('cursor-hover');
         ringRef.current?.classList.add('cursor-hover');
       }
     };
     const onOut = (e) => {
-      if (e.target.matches('a, button, [role="button"]')) {
+      if (e.target.matches('a, button, [role="button"], input, textarea, select')) {
         dotRef.current?.classList.remove('cursor-hover');
         ringRef.current?.classList.remove('cursor-hover');
       }
@@ -57,6 +54,8 @@ export default function CustomCursor() {
       cancelAnimationFrame(rafRef.current);
     };
   }, []);
+
+  if (isTouchDevice()) return null;
 
   return (
     <>

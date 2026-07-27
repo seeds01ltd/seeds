@@ -95,6 +95,7 @@ body{
   cursor:none;
 }
 a,button,input,textarea,select{cursor:none;}
+@media(hover:none)and(pointer:coarse){body,a,button,input,textarea,select{cursor:auto;} #cursor-dot,#cursor-ring{display:none!important;}}
 a{color:var(--text-accent);text-decoration:none;transition:color var(--t-fast);}
 a:hover{color:var(--indigo-light);}
 img,video{display:block;max-width:100%;}
@@ -270,9 +271,10 @@ code,pre{font-family:var(--font-mono);}
 .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-6);}
 .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--sp-6);}
 .grid-auto{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:var(--sp-6);}
+.grid-6{display:grid;grid-template-columns:repeat(6,1fr);gap:var(--sp-6);}
 
-@media(max-width:1024px){.grid-4{grid-template-columns:repeat(2,1fr);}.grid-3{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:720px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr;}}
+@media(max-width:1024px){.grid-4{grid-template-columns:repeat(2,1fr);}.grid-3{grid-template-columns:repeat(2,1fr);}.grid-6{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:720px){.grid-2,.grid-3,.grid-4,.grid-6{grid-template-columns:1fr;}}
 
 /* =========================================================  PAGE WRAPPERS */
 .page-wrapper{padding-top:80px;min-height:100vh;}
@@ -307,6 +309,31 @@ code,pre{font-family:var(--font-mono);}
   font-weight:800;letter-spacing:-0.04em;
   background:linear-gradient(135deg,var(--text-primary),var(--text-accent));
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+
+/* =========================================================  AUTH PAGES */
+.auth-card{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--r-xl);padding:var(--sp-8);
+  width:100%;
+}
+.auth-card-inner{max-width:400px;margin:0 auto;}
+.auth-form{display:flex;flex-direction:column;gap:var(--sp-4);}
+.auth-error{
+  background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.2);
+  color:#f87171;padding:0.75rem 1rem;
+  border-radius:var(--r-sm);font-size:0.875rem;
+}
+.auth-footer-text{
+  text-align:center;margin-top:var(--sp-6);
+  font-size:0.875rem;color:var(--text-muted);
+}
+.auth-link{color:var(--indigo-light);font-weight:500;}
+@media(max-width:600px){
+  .auth-card{padding:var(--sp-4);border-radius:var(--r-lg);}
+}
+@media(max-width:400px){
+  .auth-card-inner{max-width:100%;}
 }
 
 /* =========================================================  FORM */
@@ -425,7 +452,7 @@ code,pre{font-family:var(--font-mono);}
   animation:fadeUp 0.8s var(--ease-out) 0.45s both;
 }
 .hero-stats{
-  display:flex;gap:var(--sp-8); justify-content:center;
+  display:flex;gap:var(--sp-8); justify-content:center; flex-wrap:wrap;
   padding-top:var(--sp-8); margin-top:var(--sp-4);
   border-top:1px solid rgba(255,255,255,0.1);
   animation:fadeUp 0.8s var(--ease-out) 0.6s both;
@@ -438,9 +465,49 @@ code,pre{font-family:var(--font-mono);}
 }
 .hero-stat-label{font-size:0.85rem;color:var(--text-muted);}
 
-/* Removed hero-right 3D canvas styles and simplified media queries */
+/* Mobile responsive improvements */
 @media(max-width:600px){
   .hero-content-wrapper{padding:0 var(--sp-4);}
+  .section{padding:var(--sp-12) var(--sp-4);}
+  .section-sm{padding:var(--sp-8) var(--sp-4);}
+  .section-xs{padding:var(--sp-8) var(--sp-4);}
+  .section-full{padding:var(--sp-12) var(--sp-4);}
+  .page-hero{padding:var(--sp-16) var(--sp-4) var(--sp-8);}
+  .page-hero-eyebrow::before{width:20px;}
+  .hero-title{font-size:clamp(2rem,10vw,2.8rem);}
+  .hero-subtitle{font-size:1rem;}
+  .hero-stat-num{font-size:1.5rem;}
+  .hero-stats{gap:var(--sp-4);justify-content:center;}
+  .page-hero-title{font-size:clamp(2rem,8vw,2.5rem);}
+  .page-hero-desc{font-size:1rem;}
+  .section-title{font-size:clamp(1.6rem,6vw,2rem);}
+  .pricing-amount{font-size:2.2rem;}
+  .project-metrics{gap:var(--sp-4);flex-wrap:wrap;}
+  .home-about-grid{gap:var(--sp-6) !important;}
+  .home-stats-grid{gap:var(--sp-4) !important;}
+  .grid-2,.grid-3,.grid-4,.grid-6,.grid-auto{gap:var(--sp-4);}
+  .blog-card > div[style*="padding"]{padding:1.5rem !important;}
+  .testimonial{padding:var(--sp-6) var(--sp-4);}
+  .service-icon{width:44px;height:44px;}
+  .btn-xl{padding:0.75rem 1.5rem;font-size:0.95rem;}
+  .btn-lg{padding:0.65rem 1.25rem;font-size:0.9rem;}
+  .hero-cta-group{gap:var(--sp-3);}
+  .hero-cta-group .btn{width:100%;justify-content:center;}
+  .page-hero-eyebrow{font-size:0.7rem;}
+  .page-hero-eyebrow::before{width:20px;}
+  .article-content{padding:0 !important;}
+  .detail-grid .course-sidebar-content{padding:0 1rem;}
+}
+@media(max-width:400px){
+  .hero-eyebrow{font-size:0.65rem;}
+  .hero-stat-num{font-size:1.2rem;}
+  .hero-stat-label{font-size:0.72rem;}
+  .page-hero-eyebrow{font-size:0.6rem;}
+  .page-hero-eyebrow::before{width:14px;}
+  .pricing-card{padding:var(--sp-4);}
+  .service-card{padding:var(--sp-4);}
+  .footer .inner{padding:2rem 1rem;}
+  .auth-card{padding:var(--sp-3) !important;}
 }
 
 /* =========================================================  TYPEWRITER */
@@ -521,7 +588,7 @@ code,pre{font-family:var(--font-mono);}
 .project-title{font-size:1.25rem;font-weight:700;color:var(--text-primary);font-family:var(--font-heading);}
 .project-desc{font-size:0.87rem;color:var(--text-secondary);line-height:1.65;flex:1;}
 .project-metrics{
-  display:flex;gap:var(--sp-6);padding-top:var(--sp-4);
+  display:flex;gap:var(--sp-6);padding-top:var(--sp-4);flex-wrap:wrap;
   border-top:1px solid var(--border-subtle);margin-top:auto;
 }
 .project-metric-val{
@@ -714,10 +781,22 @@ code,pre{font-family:var(--font-mono);}
 .project-thumb { position: relative; }
 .project-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 
-/* Service/project detail responsive */
+/* Course detail sidebar */
+.course-sidebar-toggle { display: none; }
+
 @media (max-width: 900px) {
   .detail-grid {
     grid-template-columns: 1fr !important;
+  }
+  .course-sidebar-toggle {
+    display: flex !important;
+  }
+  .course-sidebar-content {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  .course-sidebar-content.open {
+    max-height: 600px;
   }
 }
 
