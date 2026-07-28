@@ -97,7 +97,7 @@ export default function Profile() {
                         ) : (
                           <Link to={`/verify-email?userId=${user.id}`} className="badge" style={{ background: 'rgba(251,191,36,0.15)', color: '#fbbf24', textDecoration: 'none' }}>Unverified</Link>
                         )}
-                        <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', alignSelf: 'center' }}>Joined {new Date(user.joined).toLocaleDateString()}</span>
+                        <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', alignSelf: 'center' }}>Joined {new Date(user.createdAt || user.created_at || user.joined).toLocaleDateString()}</span>
                       </div>
                     </>
                   )}
