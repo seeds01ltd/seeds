@@ -19,6 +19,7 @@ import Quote from './pages/Quote';
 import Courses from './pages/Courses';
 import CourseDetail from './pages/CourseDetail';
 import LessonViewer from './pages/LessonViewer';
+import Sandbox from './pages/Sandbox';
 import FAQ from './pages/FAQ';
 import Academy from './pages/Academy';
 import Careers from './pages/Careers';
@@ -178,6 +179,7 @@ export default function App() {
         <Route path="/courses" element={<PublicLayout><Courses /></PublicLayout>} />
         <Route path="/courses/:slug" element={<PublicLayout><CourseDetail /></PublicLayout>} />
         <Route path="/courses/:slug/lessons/:lessonId" element={<PublicLayout><LessonViewer /></PublicLayout>} />
+        <Route path="/courses/:slug/sandbox" element={<PublicLayout><Sandbox /></PublicLayout>} />
         <Route path="/faq" element={<PublicLayout><FAQ /></PublicLayout>} />
         <Route path="/academy" element={<PublicLayout><Academy /></PublicLayout>} />
         <Route path="/careers" element={<PublicLayout><Careers /></PublicLayout>} />

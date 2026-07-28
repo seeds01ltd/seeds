@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import SectionReveal from '../components/UI/SectionReveal';
-import { jobs, getDepartments } from '../data/careers';
+import { jobs, getDepartments, getByDepartment } from '../data/careers';
 import { MapPin, Briefcase, Clock, ArrowRight, GraduationCap, Sparkles } from 'lucide-react';
 
 const PERKS = [
@@ -131,8 +131,4 @@ export default function Careers() {
       </section>
     </div>
   );
-}
-
-function getByDepartment(dept) {
-  return dept === 'All' ? jobs : jobs.filter(j => j.department === dept);
 }

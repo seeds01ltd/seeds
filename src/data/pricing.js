@@ -53,7 +53,7 @@ export const plans = [
 
 export const faq = [
   { q: 'Can I change plans later?', a: 'Yes. You can upgrade, downgrade, or cancel at any time. Changes take effect at the start of the next billing cycle.' },
-  { q: 'What happens if I exceed support hours?', a: 'We track usage transparently. Extra hours are billed at ₦200,000/hr for Starter and ₦180,000/hr for Growth plans.' },
+  { q: 'What happens if I exceed support hours?', a: 'We track usage transparently. Extra hours are billed at ₦180,000/hr for Starter and ₦200,000/hr for Growth plans.' },
   { q: 'Do you offer discounts for non-profits?', a: 'Yes. We offer a 20% discount for registered non-profits and open-source foundations.' },
   { q: 'How fast can a team start?', a: 'Most teams are operational within 48 hours of signing. Enterprise engagements typically require a 1-week onboarding period.' },
 ];

@@ -79,6 +79,11 @@ export default function Contact() {
                     <label htmlFor="company" style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Company / Organization</label>
                     <input type="text" id="company" name="company" style={{ padding: '0.8rem', background: 'var(--bg-card)', border: '1px solid var(--border-subtle)', borderRadius: '4px', color: '#fff', fontSize: '1rem' }} />
                   </div>
+
+                  <div className="form-group" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                    <label htmlFor="subject" style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Subject</label>
+                    <input type="text" id="subject" name="subject" placeholder="Brief subject line" style={{ padding: '0.8rem', background: 'var(--bg-card)', border: '1px solid var(--border-subtle)', borderRadius: '4px', color: '#fff', fontSize: '1rem' }} />
+                  </div>
                   
                   <div className="form-group" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                     <label htmlFor="message" style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Project Details or Inquiry</label>

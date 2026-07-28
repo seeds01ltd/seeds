@@ -10,11 +10,12 @@ export default function ResetPassword() {
   const [done, setDone] = useState(false);
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
-  const token = searchParams.get('token') || 'demo-reset-token-u4';
+  const token = searchParams.get('token');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    if (!token) { setError('Invalid or expired reset link. Please request a new one.'); return; }
     if (password.length < 6) { setError('Password must be at least 6 characters'); return; }
     if (password !== confirm) { setError('Passwords do not match'); return; }
     setBusy(true);

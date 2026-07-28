@@ -1,22 +1,22 @@
 // ============================================================
-// API Abstraction Layer
-// ============================================================
-// To swap from mock data to real Supabase/Express backend:
-//
-//   1. Delete the `import * as X from '../data/X'` lines below
-//   2. Replace each method body with a real fetch/axios call
-//      — Signatures stay identical, consumers need no changes
-//   3. Example swap:
-//        Before: getAll: async () => { ... return servicesData.getAll(); }
-//        After:  getAll: async () => { const r=await fetch('/api/services'); return r.json(); }
-//   4. Remove `backend/prisma/seed.ts` when Supabase replaces it
+// API Abstraction Layer — Supabase-backed
 // ============================================================
 
-import * as servicesData  from '../data/services';
-import * as portfolioData from '../data/portfolio';
-import * as blogData      from '../data/blog';
-import * as coursesData   from '../data/courses';
-import * as authData      from '../data/auth';
+import { supabase } from '../lib/supabase';
+import * as authData from '../data/auth';
+import { Globe } from 'lucide-react';
+import { services as mockServices } from '../data/services';
+import { projects as mockProjects } from '../data/portfolio';
+
+function toCamel(row) {
+  if (!row || typeof row !== 'object') return row;
+  if (Array.isArray(row)) return row.map(toCamel);
+  return Object.keys(row).reduce((acc, key) => {
+    const camel = key.replace(/_([a-z])/g, (_, c) => c.toUpperCase());
+    acc[camel] = row[key];
+    return acc;
+  }, {});
+}
 import * as instructorData from '../data/instructor';
 import * as clientData from '../data/client';
 import * as developerData from '../data/developer';
@@ -29,43 +29,101 @@ import * as kbData from '../data/knowledgebase';
 import * as communityData from '../data/community';
 import * as certData from '../data/certificates';
 
+const svcIconMap = {};
+mockServices.forEach(m => { svcIconMap[m.slug] = m.icon; });
+const portIconMap = {};
+mockProjects.forEach(m => { portIconMap[m.slug] = m.icon; });
+
+const attachIcons = (items, map) => {
+  if (!items) return items;
+  const arr = Array.isArray(items) ? items : [items];
+  arr.forEach(item => { item.icon = map[item.slug] || Globe; });
+  return items;
+};
+
 const delay = (ms = 180) => new Promise(r => setTimeout(r, ms));
 
 const api = {
   services: {
-    getAll:        async () => { await delay(); return servicesData.services; },
-    getFeatured:   async () => { await delay(); return servicesData.getFeatured(); },
-    getBySlug:     async (s) => { await delay(); return servicesData.getBySlug(s); },
-    getCategories: async () => { await delay(); return servicesData.getCategories(); },
+    getAll: async () => {
+      const { data } = await supabase.from('services').select('*').order('slug');
+      return attachIcons(toCamel(data) || [], svcIconMap);
+    },
+    getFeatured: async () => {
+      const { data } = await supabase.from('services').select('*').eq('featured', true).order('slug');
+      return attachIcons(toCamel(data) || [], svcIconMap);
+    },
+    getBySlug: async (s) => {
+      const { data } = await supabase.from('services').select('*').eq('slug', s).single();
+      return attachIcons(toCamel(data) || null, svcIconMap);
+    },
+    getCategories: async () => {
+      const { data } = await supabase.from('services').select('*').order('slug');
+      return [{ id: 'all', title: 'All Services', items: attachIcons(toCamel(data) || [], svcIconMap) }];
+    },
   },
   portfolio: {
-    getAll:      async () => { await delay(); return portfolioData.getAll(); },
-    getFeatured: async () => { await delay(); return portfolioData.getFeatured(); },
-    getBySlug:   async (s) => { await delay(); return portfolioData.getBySlug(s); },
+    getAll: async () => {
+      const { data } = await supabase.from('portfolio').select('*').order('slug');
+      return attachIcons(toCamel(data) || [], portIconMap);
+    },
+    getFeatured: async () => {
+      const { data } = await supabase.from('portfolio').select('*').eq('featured', true).order('slug');
+      return attachIcons(toCamel(data) || [], portIconMap);
+    },
+    getBySlug: async (s) => {
+      const { data } = await supabase.from('portfolio').select('*').eq('slug', s).single();
+      return attachIcons(toCamel(data) || null, portIconMap);
+    },
   },
   blog: {
-    getAll:      async () => { await delay(); return blogData.getAll(); },
-    getFeatured: async () => { await delay(); return blogData.getFeatured(); },
-    getBySlug:   async (s) => { await delay(); return blogData.getBySlug(s); },
+    getAll: async () => {
+      const { data } = await supabase.from('blog_posts').select('*').order('date', { ascending: false });
+      return toCamel(data) || [];
+    },
+    getFeatured: async () => {
+      const { data } = await supabase.from('blog_posts').select('*').eq('featured', true).order('date', { ascending: false });
+      return toCamel(data) || [];
+    },
+    getBySlug: async (s) => {
+      const { data } = await supabase.from('blog_posts').select('*').eq('slug', s).single();
+      return toCamel(data) || null;
+    },
   },
   courses: {
-    getAll:      async () => { await delay(); return coursesData.courses; },
-    getFeatured: async () => { await delay(); return coursesData.getFeatured(); },
-    getBySlug:   async (s) => { await delay(); return coursesData.getBySlug(s); },
-    getCategories: async () => { await delay(); return coursesData.getCategories(); },
+    getAll: async () => {
+      const { data } = await supabase.from('courses').select('*').order('slug');
+      return toCamel(data) || [];
+    },
+    getFeatured: async () => {
+      const { data } = await supabase.from('courses').select('*').eq('featured', true).order('slug');
+      return toCamel(data) || [];
+    },
+    getBySlug: async (s) => {
+      const { data } = await supabase.from('courses').select('*').eq('slug', s).single();
+      return toCamel(data) || null;
+    },
+    getCategories: async () => {
+      return ['All', 'Beginner', 'Intermediate', 'Advanced'];
+    },
   },
   contact: {
     submit: async (data) => {
-      await delay(600);
-      console.info('[API] Contact form submission:', data);
+      const { error } = await supabase.from('contact_messages').insert({
+        name: data.name, email: data.email, subject: data.subject, message: data.message,
+      });
+      if (error) throw new Error(error.message);
       return { ok: true, message: 'Message received. We will respond within 24 hours.' };
     },
   },
   quote: {
     submit: async (data) => {
-      await delay(700);
-      console.info('[API] Quote request:', data);
-      return { ok: true, id: `QR-${Date.now()}` };
+      const { error, data: result } = await supabase.from('quote_requests').insert({
+        name: data.name, email: data.email, company: data.company, phone: data.phone,
+        service: data.service, budget: data.budget, timeline: data.timeline, description: data.description,
+      }).select('id').single();
+      if (error) throw new Error(error.message);
+      return { ok: true, id: result?.id || `QR-${Date.now()}` };
     },
   },
   client: {
@@ -140,6 +198,46 @@ const api = {
     verifyEmail:   async (i) => authData.verifyEmail(i),
     updateProfile: async (i, u) => authData.updateProfile(i, u),
     logout:        async () => { await delay(200); return { ok: true }; },
+  },
+  admin: {
+    getProfiles: async () => {
+      const { data } = await supabase.from('profiles').select('*').order('created_at', { ascending: false });
+      return toCamel(data) || [];
+    },
+    getProfile: async (id) => {
+      const { data } = await supabase.from('profiles').select('*').eq('id', id).single();
+      return toCamel(data) || null;
+    },
+    updateProfile: async (id, updates) => {
+      const allowed = ['name', 'avatar', 'role', 'verified', 'can_verify', 'can_manage_instructors', 'can_manage_admins'];
+      const filtered = Object.keys(updates).reduce((acc, k) => {
+        if (allowed.includes(k)) acc[k] = updates[k];
+        return acc;
+      }, {});
+      const { error } = await supabase.from('profiles').update(filtered).eq('id', id);
+      if (error) throw new Error(error.message);
+      return { ok: true };
+    },
+    verifyStudent: async (id, verified) => {
+      const { error } = await supabase.from('profiles').update({ verified }).eq('id', id);
+      if (error) throw new Error(error.message);
+      return { ok: true, message: verified ? 'Student verified' : 'Student unverified' };
+    },
+    makeInstructor: async (id) => {
+      const { error } = await supabase.from('profiles').update({ role: 'instructor', verified: true }).eq('id', id);
+      if (error) throw new Error(error.message);
+      return { ok: true, message: 'User promoted to instructor' };
+    },
+    updatePrivileges: async (id, privileges) => {
+      const allowed = ['can_verify', 'can_manage_instructors', 'can_manage_admins'];
+      const filtered = Object.keys(privileges).reduce((acc, k) => {
+        if (allowed.includes(k)) acc[k] = privileges[k];
+        return acc;
+      }, {});
+      const { error } = await supabase.from('profiles').update(filtered).eq('id', id);
+      if (error) throw new Error(error.message);
+      return { ok: true, message: 'Privileges updated' };
+    },
   },
 };
 

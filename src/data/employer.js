@@ -30,4 +30,4 @@ export async function getJobPosts() { await delay(200); return JOB_POSTS; }
 export async function getApplications(jobId) { await delay(200); return jobId ? APPLICATIONS.filter(a => a.jobId === jobId) : APPLICATIONS; }
 export async function getGraduates() { await delay(200); return GRADUATES; }
 export async function updateApplicationStage(id, stage) { await delay(150); const app = APPLICATIONS.find(a => a.id === id); if (app) app.stage = stage; return { ok: true }; }
-export async function createJobPost(data) { await delay(200); const post = { id: `ej${Date.now()}`, ...data, posted: new Date().toISOString().split('T')[0], status: 'active', applicants: 0 }; JOB_POSTS.unshift(post); return post; }
+export async function createJobPost(data) { await delay(200); const { id: _ignored, ...rest } = data; const post = { id: `ej${Date.now()}`, ...rest, posted: new Date().toISOString().split('T')[0], status: 'active', applicants: 0 }; JOB_POSTS.unshift(post); return post; }

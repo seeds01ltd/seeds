@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { db, generateCertificate, getUserAchievements, unlockAchievement, getUserBookmarks, getActivity, getCertificates } from '../data/db';
 import { courses } from '../data/courses';
@@ -19,8 +19,8 @@ const getContinuePath = (slug) => {
 export default function DashboardCourses() {
   const { user } = useAuth();
 
-  const enrolledSlugs = db.getEnrolledCourses();
-  const enrollments = enrolledSlugs.map(slug => {
+  const enrolledSlugs = useMemo(() => db.getEnrolledCourses(), []);
+  const enrollments = useMemo(() => enrolledSlugs.map(slug => {
     const course = courses.find(c => c.slug === slug);
     const p = db.getProgress(slug);
     return {
@@ -31,10 +31,10 @@ export default function DashboardCourses() {
       progress: p.progress || 0,
       completed: p.completed || [],
     };
-  });
+  }), [enrolledSlugs]);
 
   const totalEnrolled = enrolledSlugs.length;
-  const completedCourses = enrollments.filter(e => e.progress === 100);
+  const completedCourses = useMemo(() => enrollments.filter(e => e.progress === 100), [enrollments]);
 
   useEffect(() => {
     completedCourses.forEach(c => {

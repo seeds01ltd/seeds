@@ -21,7 +21,7 @@ export default function Dashboard() {
   return (
     <div className="page-wrapper" style={{ paddingTop: 0 }}>
       <div style={{ display: 'flex', minHeight: 'calc(100vh - 3.5rem)' }}>
-        <aside style={{
+        <aside className="dashboard-sidebar" style={{
           width: 240, flexShrink: 0, borderRight: '1px solid var(--border)',
           background: 'var(--bg-surface)', padding: 'var(--sp-6) 0',
           position: 'sticky', top: '3.5rem', alignSelf: 'flex-start', height: 'calc(100vh - 3.5rem)',

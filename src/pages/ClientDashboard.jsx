@@ -70,16 +70,16 @@ export default function ClientDashboard() {
                 </div>
                 <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '1rem' }}>{p.description}</p>
                 <div style={{ display: 'flex', gap: '2rem', fontSize: '0.8125rem', color: 'var(--text-muted)', marginBottom: '0.75rem' }}>
-                  <span>Budget: <strong style={{ color: 'var(--text-primary)' }}>₦{p.budget.toLocaleString()}</strong></span>
-                  <span>Spent: <strong style={{ color: 'var(--text-primary)' }}>₦{p.spent.toLocaleString()}</strong></span>
+                  <span>Budget: <strong style={{ color: 'var(--text-primary)' }}>₦{(p.budget || 0).toLocaleString()}</strong></span>
+                  <span>Spent: <strong style={{ color: 'var(--text-primary)' }}>₦{(p.spent || 0).toLocaleString()}</strong></span>
                   <span>Manager: {p.manager}</span>
                   <span>Deadline: {p.deadline}</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                   <div style={{ flex: 1, maxWidth: 300, height: 8, background: 'var(--border)', borderRadius: 4, overflow: 'hidden' }}>
-                    <div style={{ width: `${p.progress}%`, height: '100%', background: p.progress === 100 ? 'var(--emerald-light)' : 'var(--indigo-light)', borderRadius: 4 }} />
+                    <div style={{ width: `${p.progress || 0}%`, height: '100%', background: (p.progress || 0) === 100 ? 'var(--emerald-light)' : 'var(--indigo-light)', borderRadius: 4 }} />
                   </div>
-                  <span style={{ fontSize: '0.8125rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>{p.progress}%</span>
+                  <span style={{ fontSize: '0.8125rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>{p.progress || 0}%</span>
                 </div>
               </div>
             ))}
@@ -137,7 +137,7 @@ export default function ClientDashboard() {
               <div key={c.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--sp-4) var(--sp-5)', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 'var(--r-md)' }}>
                 <div>
                   <p style={{ fontWeight: 500, fontSize: '0.9375rem' }}>{c.title}</p>
-                  <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Signed {c.signed} · ₦{c.value.toLocaleString()} · {c.type}</p>
+                  <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Signed {c.signed} · ₦{(c.value || 0).toLocaleString()} · {c.type}</p>
                 </div>
                 {statusBadge(c.status)}
               </div>
@@ -151,7 +151,7 @@ export default function ClientDashboard() {
               <div key={i.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--sp-4) var(--sp-5)', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 'var(--r-md)' }}>
                 <div>
                   <p style={{ fontWeight: 500, fontSize: '0.9375rem' }}>{i.number}</p>
-                  <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Issued {i.issued} · Due {i.due} · <strong>₦{i.amount.toLocaleString()}</strong></p>
+                  <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Issued {i.issued} · Due {i.due} · <strong>₦{(i.amount || 0).toLocaleString()}</strong></p>
                 </div>
                 {statusBadge(i.status)}
               </div>

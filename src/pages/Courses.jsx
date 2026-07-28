@@ -93,7 +93,7 @@ export default function Courses() {
                           <Clock size={14} /> {course.duration}
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-                          <Users size={14} /> {course.students.toLocaleString()}
+                          <Users size={14} /> {(course.students || 0).toLocaleString()}
                         </div>
                       </div>
                       <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '0.5rem', fontFamily: 'var(--font-mono)' }}>

@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import api from '../api';
 import { db } from '../data/db';
 import SectionReveal from '../components/UI/SectionReveal';
-import { ArrowLeft, Clock, Users, BookOpen, GraduationCap, CheckCircle, Circle, Play, ChevronDown } from 'lucide-react';
+import { ArrowLeft, Clock, Users, BookOpen, GraduationCap, CheckCircle, Circle, Play, ChevronDown, Code2 } from 'lucide-react';
 
 const LEVEL_COLORS = {
   Beginner: '#34d399',
@@ -131,6 +131,9 @@ export default function CourseDetail() {
                     <BookOpen size={20} /> Start Course — Free
                   </button>
                 )}
+                <Link to={`/courses/${slug}/sandbox`} className="btn btn-outline btn-lg" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <Code2 size={20} /> Sandbox
+                </Link>
               </div>
             </SectionReveal>
           )}

@@ -11,6 +11,8 @@ const COLS = [
       ['Embedded Systems', '/services/embedded'],
       ['Cybersecurity', '/services/cybersecurity'],
       ['Data Engineering', '/services/data-engineering'],
+      ['Blockchain & Web3', '/services/blockchain'],
+      ['Design Systems & UX', '/services/design-systems'],
     ],
   },
   {
@@ -36,8 +38,6 @@ const COLS = [
     ],
   },
 ];
-
-
 
 export default function Footer() {
   return (
@@ -86,7 +86,7 @@ export default function Footer() {
 
       {/* Bottom bar */}
       <div className={styles.bottom}>
-        <p>&copy; 2026 Seeds Software Development</p>
+        <p>&copy; 2026 Seed Software Development</p>
         <div className={styles.bottomLinks}>
           <Link to="/legal/privacy">Privacy Policy</Link>
           <Link to="/legal/terms">Terms of Service</Link>

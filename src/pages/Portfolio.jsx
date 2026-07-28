@@ -36,7 +36,7 @@ export default function Portfolio() {
               onClick={() => setActive(ind)}
               style={{
                 padding: '0.4rem 1rem', borderRadius: 'var(--r-full)',
-                border: '1px solid', cursor: 'none', fontSize: '0.85rem',
+                border: '1px solid', fontSize: '0.85rem',
                 fontFamily: 'var(--font-body)', fontWeight: 500,
                 transition: 'all 0.2s',
                 background: active === ind ? 'var(--indigo)' : 'transparent',
@@ -78,14 +78,14 @@ export default function Portfolio() {
                         <div className="project-title">{p.title}</div>
                         <div className="project-desc">{p.summary}</div>
                         <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', margin: '0.5rem 0' }}>
-                          {p.tech.map(t => (
+                          {(p.tech || []).map(t => (
                             <span key={t} style={{ padding: '0.18rem 0.5rem', borderRadius: 4, background: 'var(--bg-raised)', border: '1px solid var(--border-subtle)', fontFamily: 'var(--font-mono)', fontSize: '0.68rem', color: 'var(--text-muted)' }}>
                               {t}
                             </span>
                           ))}
                         </div>
                         <div className="project-metrics">
-                          {p.results.map((r, ri) => (
+                          {(p.results || []).map((r, ri) => (
                             <div key={ri}>
                               <div className="project-metric-val" style={{ color: p.color }}>{r.metric}</div>
                               <div className="project-metric-label">{r.label}</div>

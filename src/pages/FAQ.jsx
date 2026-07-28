@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { faqCategories } from '../data/faq';
 import SectionReveal from '../components/UI/SectionReveal';
 import { Search, ChevronDown } from 'lucide-react';
@@ -130,8 +131,8 @@ export default function FAQ() {
               <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.4rem', marginBottom: '0.5rem' }}>Still have questions?</h3>
               <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginBottom: '1.5rem' }}>Our team is here to help. Reach out and we'll get back to you within 24 hours.</p>
               <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-                <a href="mailto:hello@seed.dev" className="btn btn-primary btn-lg">Email Us</a>
-                <a href="/contact" className="btn btn-secondary btn-lg">Contact Page</a>
+                <a href="mailto:hello@seed.ng" className="btn btn-primary btn-lg">Email Us</a>
+                <Link to="/contact" className="btn btn-secondary btn-lg">Contact Page</Link>
               </div>
             </div>
           </SectionReveal>

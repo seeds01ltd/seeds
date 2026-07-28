@@ -130,7 +130,7 @@ export default function Navbar() {
                   </Link>
                 )}
                 <Link to="/profile" className="btn btn-ghost btn-sm">
-                  {user.avatar || '👤'} {user.name}
+                  {user.avatar || '👤'} {user.name || user.email || 'User'}
                 </Link>
                 <button className="btn btn-ghost btn-sm" onClick={logout} style={{ color: 'var(--rose)' }}>
                   Sign Out

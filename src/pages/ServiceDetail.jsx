@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import api from '../api';
 import SectionReveal from '../components/UI/SectionReveal';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Globe } from 'lucide-react';
 
 export default function ServiceDetail() {
   const { slug } = useParams();
@@ -19,7 +19,7 @@ export default function ServiceDetail() {
   if (loading) return <div style={{ textAlign: 'center', padding: '10rem 0', color: 'var(--text-muted)' }}>Loading service...</div>;
   if (!service) return <div style={{ textAlign: 'center', padding: '10rem 0', color: 'var(--text-muted)' }}>Service not found.</div>;
 
-  const Icon = service.icon;
+  const Icon = service.icon || Globe;
 
   return (
     <div className="page-wrapper">
@@ -66,7 +66,7 @@ export default function ServiceDetail() {
                 <div style={{ background: 'var(--bg-surface)', padding: '2rem', borderRadius: 'var(--r-lg)', border: '1px solid var(--border-subtle)' }}>
                   <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.1rem', color: 'var(--text-primary)', marginBottom: '1rem', borderBottom: '1px solid var(--border-subtle)', paddingBottom: '0.5rem' }}>Technologies Used</h3>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                    {service.tech.map(t => (
+                    {(service.tech || []).map(t => (
                       <div key={t} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                         <span style={{ width: 6, height: 6, borderRadius: '50%', background: service.color }} />
                         <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>{t}</span>

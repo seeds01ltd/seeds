@@ -1,6 +1,4 @@
-import { useEffect, useRef } from 'react';
-
-const isTouchDevice = () => 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+import { useEffect, useRef, useState } from 'react';
 
 export default function CustomCursor() {
   const dotRef  = useRef(null);
@@ -8,9 +6,10 @@ export default function CustomCursor() {
   const pos     = useRef({ x: -100, y: -100 });
   const ring    = useRef({ x: -100, y: -100 });
   const rafRef  = useRef(null);
+  const [isTouch] = useState(() => window.matchMedia('(hover: none) and (pointer: coarse)').matches);
 
   useEffect(() => {
-    if (isTouchDevice()) return;
+    if (isTouch) return;
 
     const onMove = (e) => {
       pos.current = { x: e.clientX, y: e.clientY };
@@ -53,9 +52,9 @@ export default function CustomCursor() {
       document.removeEventListener('mouseout', onOut);
       cancelAnimationFrame(rafRef.current);
     };
-  }, []);
+  }, [isTouch]);
 
-  if (isTouchDevice()) return null;
+  if (isTouch) return null;
 
   return (
     <>

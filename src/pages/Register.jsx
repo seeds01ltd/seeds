@@ -23,7 +23,7 @@ export default function Register() {
     setBusy(true);
     try {
       await register({ name, email, password });
-      navigate('/profile');
+      navigate('/dashboard');
     } catch (err) {
       setError(err.message);
     } finally {

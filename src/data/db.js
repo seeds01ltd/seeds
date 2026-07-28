@@ -74,8 +74,11 @@ export const db = {
 
   addBookmark(courseSlug, lessonId, note = '') {
     const data = load();
-    data.bookmarks.push({ courseSlug, lessonId, note, createdAt: Date.now() });
-    save(data);
+    const exists = data.bookmarks.some(b => b.lessonId === lessonId && b.courseSlug === courseSlug);
+    if (!exists) {
+      data.bookmarks.push({ courseSlug, lessonId, note, createdAt: Date.now() });
+      save(data);
+    }
   },
 
   getBookmarks() {

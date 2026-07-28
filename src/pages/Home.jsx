@@ -97,7 +97,7 @@ export default function Home() {
         {/* Fullscreen Background Image (User uploaded a .jpg instead of .mp4) */}
         <img 
           className="hero-video-bg" 
-          src="/bg-video.mp4.jpg"
+          src="/bg-video.jpg"
           alt="Hero Background"
         />
         <div className="hero-video-overlay" />
@@ -198,7 +198,7 @@ export default function Home() {
                     <div className="service-title">{svc.title}</div>
                     <div className="service-desc">{svc.description}</div>
                     <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
-                      {svc.tech.slice(0, 3).map(t => (
+                      {(svc.tech || []).slice(0, 3).map(t => (
                         <span key={t} style={{ padding: '0.18rem 0.5rem', borderRadius: 4, background: 'var(--bg-raised)', border: '1px solid var(--border-subtle)', fontFamily: 'var(--font-mono)', fontSize: '0.68rem', color: 'var(--text-muted)' }}>
                           {t}
                         </span>
@@ -307,7 +307,7 @@ export default function Home() {
                       <div className="project-title">{p.title}</div>
                       <div className="project-desc">{p.summary}</div>
                       <div className="project-metrics">
-                        {p.results.map((r, ri) => (
+                        {(p.results || []).map((r, ri) => (
                           <div key={ri}>
                             <div className="project-metric-val" style={{ color: p.color }}>{r.metric}</div>
                             <div className="project-metric-label">{r.label}</div>
@@ -356,7 +356,7 @@ export default function Home() {
                     onClick={() => setTestimIdx(i)}
                     style={{
                       width: i === testimIdx ? 24 : 8, height: 8,
-                      borderRadius: 4, border: 'none', cursor: 'none',
+                      borderRadius: 4, border: 'none',
                       background: i === testimIdx ? 'var(--indigo-light)' : 'var(--border)',
                       transition: 'all 0.3s ease',
                     }}

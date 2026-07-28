@@ -42,7 +42,7 @@ export default function Services() {
                       <div className="service-title">{svc.title}</div>
                       <div className="service-desc">{svc.description}</div>
                       <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
-                        {svc.tech.map(t => (
+                        {(svc.tech || []).map(t => (
                           <span key={t} style={{ padding: '0.18rem 0.5rem', borderRadius: 4, background: 'var(--bg-raised)', border: '1px solid var(--border-subtle)', fontFamily: 'var(--font-mono)', fontSize: '0.68rem', color: 'var(--text-muted)' }}>
                             {t}
                           </span>

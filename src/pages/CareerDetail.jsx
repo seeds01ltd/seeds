@@ -76,11 +76,11 @@ export default function CareerDetail() {
                 <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '1.5rem' }}>
                   Send your CV and a brief cover letter. We aim to respond within 5 business days.
                 </p>
-                <a href="mailto:careers@seed.dev?subject=Application: ${job.title}" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
+                <a href={`mailto:careers@seed.ng?subject=Application: ${job.title}`} className="btn btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
                   Apply Now
                 </a>
                 <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textAlign: 'center', marginTop: '0.75rem' }}>
-                  careers@seed.dev
+                  careers@seed.ng
                 </p>
               </div>
             </div>

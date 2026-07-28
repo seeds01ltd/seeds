@@ -75,7 +75,7 @@ export default function LessonViewer() {
           </Link>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-              Lesson {lessonId} of {lessons.length}
+              Lesson {currentIdx + 1} of {lessons.length}
             </div>
             {enrolled && (
               <div style={{ width: 80, height: 4, borderRadius: 2, background: 'var(--border)', overflow: 'hidden' }}>

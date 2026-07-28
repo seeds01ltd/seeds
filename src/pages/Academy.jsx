@@ -10,7 +10,7 @@ const PATHS = [
 ];
 
 const HIGHLIGHTS = [
-  { icon: BookOpen, label: '8 Courses', desc: 'Across Beginner to Advanced levels' },
+  { icon: BookOpen, label: '8 Courses', desc: 'Across Beginner, Intermediate & Advanced levels' },
   { icon: Users, label: 'Expert Instructors', desc: 'Taught by SEED senior engineers' },
   { icon: GraduationCap, label: 'Self-Paced', desc: 'Learn at your own schedule' },
   { icon: Award, label: 'Certificates', desc: 'Shareable on LinkedIn & verified' },

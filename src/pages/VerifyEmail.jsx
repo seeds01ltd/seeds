@@ -6,9 +6,10 @@ import SectionReveal from '../components/UI/SectionReveal';
 export default function VerifyEmail() {
   const [searchParams] = useSearchParams();
   const [status, setStatus] = useState('verifying');
-  const userId = searchParams.get('userId') || 'u5';
+  const userId = searchParams.get('userId');
 
   useEffect(() => {
+    if (!userId) { setStatus('error'); return; }
     api.auth.verifyEmail(userId)
       .then(() => setStatus('success'))
       .catch(() => setStatus('error'));

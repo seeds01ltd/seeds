@@ -92,10 +92,9 @@ body{
   overflow-x:hidden;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
-  cursor:none;
 }
-a,button,input,textarea,select{cursor:none;}
-@media(hover:none)and(pointer:coarse){body,a,button,input,textarea,select{cursor:auto;} #cursor-dot,#cursor-ring{display:none!important;}}
+@media(hover:hover)and(pointer:fine){body{cursor:none;}a,button,input,textarea,select{cursor:none;}}
+@media(hover:none)and(pointer:coarse){#cursor-dot,#cursor-ring{display:none!important;}}
 a{color:var(--text-accent);text-decoration:none;transition:color var(--t-fast);}
 a:hover{color:var(--indigo-light);}
 img,video{display:block;max-width:100%;}
