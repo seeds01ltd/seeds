@@ -19,7 +19,7 @@ export const services = [
     tagline: 'Full-stack products built to scale from day one.',
     color: '#818cf8',
     image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1200',
-    video: 'https://www.w3schools.com/html/mov_bbb.mp4',
+    video: null,
     description: 'We design and engineer web applications and native mobile experiences that are fast, accessible, and beautifully crafted. From SaaS platforms to consumer apps.',
     content: `
       <h2>Beyond the Framework</h2>

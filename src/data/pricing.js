@@ -1,7 +1,7 @@
 export const plans = [
   {
     name: 'Starter',
-    price: '₦2,500,000',
+    price: '2,500,000',
     unit: '/mo',
     desc: 'For early-stage teams needing focused engineering support to move fast.',
     featured: false,
@@ -17,7 +17,7 @@ export const plans = [
   },
   {
     name: 'Growth',
-    price: '₦8,000,000',
+    price: '8,000,000',
     unit: '/mo',
     desc: 'For scaling companies shipping production systems and hitting milestones.',
     featured: true,
