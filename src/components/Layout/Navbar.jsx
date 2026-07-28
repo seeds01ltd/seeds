@@ -171,8 +171,14 @@ export default function Navbar() {
         </div>
       </header>
 
+      {/* Mobile overlay */}
+      <div className={`${styles.mobileOverlay} ${mobileOpen ? styles.open : ''}`} onClick={() => setMobileOpen(false)} aria-hidden={!mobileOpen} />
+
       {/* Mobile Menu */}
       <div className={`${styles.mobile} ${mobileOpen ? styles.mobileOpen : ''}`} aria-hidden={!mobileOpen}>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem' }}>
+          <button onClick={() => setMobileOpen(false)} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', fontSize: '1.5rem', cursor: 'pointer', padding: '0.25rem' }} aria-label="Close menu">✕</button>
+        </div>
         <nav>
           {NAV.map(({ to, label, dropdown }) =>
             dropdown ? (

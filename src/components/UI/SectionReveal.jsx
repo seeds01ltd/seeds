@@ -1,14 +1,5 @@
 import { useEffect, useRef } from 'react';
 
-/**
- * Scroll-triggered reveal wrapper.
- * Children fade up into view when they enter the viewport.
- * 
- * Usage:
- *   <SectionReveal delay={0.2}>
- *     <div>content</div>
- *   </SectionReveal>
- */
 export default function SectionReveal({ children, delay = 0, className = '' }) {
   const ref = useRef(null);
 
@@ -28,7 +19,18 @@ export default function SectionReveal({ children, delay = 0, className = '' }) {
     );
 
     observer.observe(el);
-    return () => observer.disconnect();
+
+    const timer = setTimeout(() => {
+      if (!el.classList.contains('visible')) {
+        el.style.transitionDelay = `${delay}s`;
+        el.classList.add('visible');
+      }
+    }, 600);
+
+    return () => {
+      observer.disconnect();
+      clearTimeout(timer);
+    };
   }, [delay]);
 
   return (

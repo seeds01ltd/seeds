@@ -8,7 +8,7 @@ export const projects = [
     industry: 'Healthcare',
     color: '#34d399',
     icon: HeartPulse,
-    image: 'https://images.unsplash.com/photo-1576091160550-2173ff9e5ee5?auto=format&fit=crop&q=80&w=1200',
+    image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=1200',
     summary: 'End-to-end EHR platform serving 1.2M patients across 40 hospitals. Real-time clinical decision support powered by a custom ML model with 94% diagnostic accuracy.',
     content: `
       <h2>The Challenge</h2>
@@ -50,7 +50,7 @@ export const projects = [
     industry: 'Logistics',
     color: '#60a5fa',
     icon: Truck,
-    image: 'https://images.unsplash.com/photo-1586528116311-ad8ed7c83a0a?auto=format&fit=crop&q=80&w=1200',
+    image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200',
     summary: 'AI-powered route optimisation and real-time fleet management for 4,200 vehicles across 18 countries. Reduced fuel costs by 23% and carbon emissions by 31%.',
     content: `<h2>Global Route Optimisation</h2><p>Using real-time traffic data and a custom Graph Neural Network, we optimised routes dynamically across 18 countries.</p>`,
     tech: ['Python', 'React Native', 'PostgreSQL', 'Kubernetes', 'GraphQL'],
@@ -68,7 +68,7 @@ export const projects = [
     industry: 'Manufacturing',
     color: '#fbbf24',
     icon: Factory,
-    image: 'https://images.unsplash.com/photo-1565439390232-a5e2d1ebbf18?auto=format&fit=crop&q=80&w=1200',
+    image: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=1200',
     summary: 'Industrial IoT platform connecting 3,400 sensors across 12 production lines. Predictive maintenance reduced unplanned downtime by 78% in the first year.',
     content: `<h2>Industrial IoT</h2><p>Connected sensors stream 1TB of data daily to an InfluxDB cluster, where predictive models anticipate machine failure.</p>`,
     tech: ['Rust', 'MQTT', 'InfluxDB', 'React', 'Kubernetes'],

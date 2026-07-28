@@ -49,7 +49,7 @@ export const services = [
     title: 'Cloud & DevOps',
     tagline: 'Resilient infrastructure that scales without friction.',
     color: '#60a5fa',
-    image: 'https://images.unsplash.com/photo-1667372283536-a831e58cddef?auto=format&fit=crop&q=80&w=1200',
+    image: 'https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?auto=format&fit=crop&q=80&w=1200',
     description: 'Cloud architecture, CI/CD pipelines, Kubernetes orchestration, and platform engineering. We build infrastructure that teams love to operate.',
     content: `<h2>Infrastructure as Code</h2><p>Everything we build is defined in Terraform and automated via GitHub Actions.</p>`,
     tech: ['AWS', 'GCP', 'Kubernetes', 'Terraform', 'GitHub Actions'],

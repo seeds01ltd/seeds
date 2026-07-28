@@ -56,7 +56,7 @@ export const posts = [
     author: 'Sophia Andersen', authorInitials: 'SA',
     date: 'May 30, 2025', readTime: '15 min read',
     tags: ['Kubernetes', 'AWS', 'Cost'],
-    image: 'https://images.unsplash.com/photo-1667372283536-a831e58cddef?auto=format&fit=crop&q=80&w=1200',
+    image: 'https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?auto=format&fit=crop&q=80&w=1200',
     content: `<h2>Infrastructure as Cost</h2><p>Cloud spend is engineering spend. By aggressively bin-packing our workloads and leaning heavily into Spot instances, we transformed our AWS bill.</p>`,
     featured: false,
   },

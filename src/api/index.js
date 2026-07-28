@@ -209,11 +209,15 @@ const api = {
     register: async ({ name, email, password }) => {
       const { data, error } = await supabase.auth.signUp({ email, password });
       if (error) throw new Error(error.message);
+      if (!data.user) throw new Error('Sign-up requires email confirmation. Please check your inbox.');
       const avatar = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(name)}&backgroundColor=10b981`;
-      const { error: upsertError } = await supabase.from('profiles').upsert({
-        id: data.user.id, name, email, avatar, role: 'student', joined: new Date().toISOString().split('T')[0],
-      }, { onConflict: 'id' });
-      if (upsertError) throw new Error(upsertError.message);
+      try {
+        await supabase.from('profiles').upsert({
+          id: data.user.id, name, email, avatar, role: 'student', joined: new Date().toISOString().split('T')[0],
+        }, { onConflict: 'id' });
+      } catch (_) {
+        // profile insert may fail due to RLS; trigger on auth.users handles it
+      }
       const accessToken = data.session?.access_token || null;
       const user = { id: data.user.id, name, email, avatar, role: 'student', accessToken };
       return { user, accessToken, session: data.session };
@@ -221,8 +225,12 @@ const api = {
     getMe: async (token) => {
       const { data, error } = await supabase.auth.getUser(token);
       if (error || !data.user) throw new Error('Invalid token');
-      const profile = await supabase.from('profiles').select('*').eq('id', data.user.id).single();
-      return { ...data.user, ...toCamel(profile.data || {}) };
+      let profileData = {};
+      try {
+        const profile = await supabase.from('profiles').select('*').eq('id', data.user.id).single();
+        if (profile.data) profileData = toCamel(profile.data);
+      } catch (_) { /* profile may not exist yet */ }
+      return { ...data.user, ...profileData };
     },
     forgotPassword: async (email) => {
       const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: 'https://seeds-lac.vercel.app/reset-password' });

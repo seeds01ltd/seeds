@@ -66,6 +66,7 @@ import CertificateVerify from './pages/CertificateVerify';
 // Admin
 import { AdminProvider } from './admin/AdminContext';
 import ProtectedRoute from './admin/components/ProtectedRoute';
+import AuthGuard from './components/AuthGuard';
 import AdminLayout from './admin/components/AdminLayout';
 import AdminLogin from './admin/pages/Login';
 import AdminDashboard from './admin/pages/Dashboard';
@@ -83,11 +84,25 @@ import AdminMedia from './admin/pages/Media';
 import './admin/admin.css';
 
 function Placeholder({ title }) {
+  const is404 = title === '404 Not Found';
   return (
     <div className="page-wrapper">
-      <div className="page-hero">
-        <h1 className="page-hero-title">{title}</h1>
-        <p className="section-desc" style={{ margin: '0 auto' }}>This section is currently under construction and pending final design details.</p>
+      <div className="page-hero" style={{ position: 'relative', overflow: 'hidden' }}>
+        <div className="grid-bg" />
+        {is404 && <div className="glow-blob glow-blob-indigo" style={{ width: 500, height: 400, top: '-10%', right: '0', opacity: 0.15 }} />}
+        <h1 className="page-hero-title" style={is404 ? { fontSize: '6rem', color: 'var(--indigo-light)', lineHeight: 1 } : {}}>
+          {is404 ? '404' : title}
+        </h1>
+        <p className="page-hero-desc" style={{ margin: '0 auto' }}>
+          {is404 ? "The page you're looking for doesn't exist or has been moved." : 'This section is under construction.'}
+        </p>
+        {is404 && (
+          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '2rem', flexWrap: 'wrap' }}>
+            <Link to="/" className="btn btn-primary btn-lg">Back to Home</Link>
+            <Link to="/courses" className="btn btn-outline btn-lg">Browse Courses</Link>
+            <Link to="/contact" className="btn btn-outline btn-lg">Contact Us</Link>
+          </div>
+        )}
       </div>
       <div className="content-sections">
         <div style={{ height: '30vh' }}></div>
@@ -198,14 +213,14 @@ export default function App() {
         <Route path="/employer" element={<PublicLayout><EmployerDashboard /></PublicLayout>} />
 
         {/* Phase 7 — Platform Modules */}
-        <Route path="/modules/crm" element={<PublicLayout><CRM /></PublicLayout>} />
-        <Route path="/modules/project-management" element={<PublicLayout><ProjectManagement /></PublicLayout>} />
-        <Route path="/modules/finance" element={<PublicLayout><Finance /></PublicLayout>} />
-        <Route path="/modules/messages" element={<PublicLayout><Messages /></PublicLayout>} />
-        <Route path="/modules/knowledge-base" element={<PublicLayout><KnowledgeBase /></PublicLayout>} />
-        <Route path="/modules/community" element={<PublicLayout><Community /></PublicLayout>} />
-        <Route path="/modules/certificate-verify" element={<PublicLayout><CertificateVerify /></PublicLayout>} />
-        <Route path="/modules/certificate-verify/:id" element={<PublicLayout><CertificateVerify /></PublicLayout>} />
+        <Route path="/modules/crm" element={<AuthGuard><PublicLayout><CRM /></PublicLayout></AuthGuard>} />
+        <Route path="/modules/project-management" element={<AuthGuard><PublicLayout><ProjectManagement /></PublicLayout></AuthGuard>} />
+        <Route path="/modules/finance" element={<AuthGuard><PublicLayout><Finance /></PublicLayout></AuthGuard>} />
+        <Route path="/modules/messages" element={<AuthGuard><PublicLayout><Messages /></PublicLayout></AuthGuard>} />
+        <Route path="/modules/knowledge-base" element={<AuthGuard><PublicLayout><KnowledgeBase /></PublicLayout></AuthGuard>} />
+        <Route path="/modules/community" element={<AuthGuard><PublicLayout><Community /></PublicLayout></AuthGuard>} />
+        <Route path="/modules/certificate-verify" element={<AuthGuard><PublicLayout><CertificateVerify /></PublicLayout></AuthGuard>} />
+        <Route path="/modules/certificate-verify/:id" element={<AuthGuard><PublicLayout><CertificateVerify /></PublicLayout></AuthGuard>} />
 
         {/* Instructor routes */}
         <Route path="/instructor" element={<InstructorLayout />}>

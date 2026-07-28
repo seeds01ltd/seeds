@@ -16,7 +16,12 @@ export default function ProjectManagement() {
   const [milestones, setMilestones] = useState([]);
   const [timeEntries, setTimeEntries] = useState([]);
 
-  useEffect(() => { api.pm.getBoards().then(setBoards); }, []);
+  useEffect(() => {
+    api.pm.getBoards().then(list => {
+      setBoards(list);
+      if (list.length > 0 && !activeBoard) setActiveBoard(list[0].id);
+    });
+  }, []);
   useEffect(() => { if (activeBoard) api.pm.getBoard(activeBoard).then(setBoardData); }, [activeBoard]);
   useEffect(() => { api.pm.getMilestones().then(setMilestones); }, []);
   useEffect(() => { api.pm.getTimeEntries().then(setTimeEntries); }, []);
