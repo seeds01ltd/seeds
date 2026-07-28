@@ -1,0 +1,14 @@
+import { chromium } from 'playwright';
+const browser = await chromium.launch({ headless: true });
+const page = await browser.newPage();
+await page.goto('https://seeds-lac.vercel.app/this-does-not-exist', { waitUntil: 'networkidle' });
+console.log('URL:', page.url());
+console.log('Title:', await page.title());
+const body = await page.textContent('body');
+console.log('Body:', JSON.stringify(body.substring(0, 500)));
+const h1 = await page.textContent('h1');
+console.log('H1:', JSON.stringify(h1));
+const links = await page.$$('a');
+console.log('Links:', links.length);
+for (const a of links) console.log('  href:', await a.getAttribute('href'));
+await browser.close();
