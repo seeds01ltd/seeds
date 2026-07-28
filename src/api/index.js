@@ -202,18 +202,21 @@ const api = {
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw new Error(error.message);
       const profile = await supabase.from('profiles').select('*').eq('id', data.user.id).single();
-      const user = { ...data.user, ...toCamel(profile.data || {}), accessToken: data.session.access_token };
-      return { user, accessToken: data.session.access_token };
+      const accessToken = data.session.access_token;
+      const user = { ...data.user, ...toCamel(profile.data || {}), accessToken };
+      return { user, accessToken, session: data.session };
     },
     register: async ({ name, email, password }) => {
       const { data, error } = await supabase.auth.signUp({ email, password });
       if (error) throw new Error(error.message);
       const avatar = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(name)}&backgroundColor=10b981`;
-      await supabase.from('profiles').insert({
+      const { error: upsertError } = await supabase.from('profiles').upsert({
         id: data.user.id, name, email, avatar, role: 'student', joined: new Date().toISOString().split('T')[0],
-      });
-      const user = { id: data.user.id, name, email, avatar, role: 'student', accessToken: data.session.access_token };
-      return { user, accessToken: data.session.access_token };
+      }, { onConflict: 'id' });
+      if (upsertError) throw new Error(upsertError.message);
+      const accessToken = data.session?.access_token || null;
+      const user = { id: data.user.id, name, email, avatar, role: 'student', accessToken };
+      return { user, accessToken, session: data.session };
     },
     getMe: async (token) => {
       const { data, error } = await supabase.auth.getUser(token);

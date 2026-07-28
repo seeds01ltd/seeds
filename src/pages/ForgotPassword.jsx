@@ -31,9 +31,10 @@ export default function ForgotPassword() {
           <p className="section-desc" style={{ margin: '0 auto' }}>We&apos;ll send you a reset link</p>
         </SectionReveal>
       </div>
-      <div className="content-sections">
-        <section style={{ padding: 'var(--sp-16) 0' }}>
-          <div style={{ maxWidth: 440, margin: '0 auto' }}>
+      <div style={{ background: 'var(--bg-base)' }}>
+        <div className="section section-sm" style={{ maxWidth: 480 }}>
+          <div className="auth-card">
+            <div className="auth-card-inner">
             {sent ? (
               <div style={{ textAlign: 'center' }}>
                 <div style={{ background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.2)', color: 'var(--text-accent)', padding: 'var(--sp-8)', borderRadius: 'var(--r-md)', fontSize: '0.9375rem' }}>
@@ -59,8 +60,9 @@ export default function ForgotPassword() {
                 </p>
               </>
             )}
+            </div>
           </div>
-        </section>
+        </div>
       </div>
     </div>
   );

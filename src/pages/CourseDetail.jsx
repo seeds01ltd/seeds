@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import api from '../api';
 import { db } from '../data/db';
+import { useAuth } from '../contexts/AuthContext';
 import SectionReveal from '../components/UI/SectionReveal';
 import { ArrowLeft, Clock, Users, BookOpen, GraduationCap, CheckCircle, Circle, Play, ChevronDown, Code2 } from 'lucide-react';
 
@@ -13,6 +14,8 @@ const LEVEL_COLORS = {
 
 export default function CourseDetail() {
   const { slug } = useParams();
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(true);
   const [enrolled, setEnrolled] = useState(false);
@@ -38,6 +41,10 @@ export default function CourseDetail() {
   const firstLesson = lessons[0];
 
   const handleEnrol = () => {
+    if (!user) {
+      navigate('/login', { state: { from: `/courses/${slug}` } });
+      return;
+    }
     db.enroll(course.slug);
     setEnrolled(true);
     setProgress(0);

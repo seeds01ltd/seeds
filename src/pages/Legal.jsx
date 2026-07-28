@@ -22,7 +22,7 @@ const PAGES = {
       <h2>Security</h2>
       <p>We implement appropriate technical and organisational measures to protect your personal information, including encryption at rest and in transit, access controls, and regular security audits.</p>
       <h2>Your Rights</h2>
-      <p>You have the right to access, correct, or delete your personal data. You may also object to or restrict certain processing activities. To exercise these rights, contact us at privacy@seed.dev.</p>
+      <p>You have the right to access, correct, or delete your personal data. You may also object to or restrict certain processing activities. To exercise these rights, contact us at privacy@seed.ng.</p>
       <h2>Contact</h2>
       <p>For privacy-related inquiries: privacy@seed.ng<br/>SEED Software Development Ltd., 15a Bishop Oluwole Street, Victoria Island, Lagos, Nigeria</p>
     `,

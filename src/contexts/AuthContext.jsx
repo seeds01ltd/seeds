@@ -29,13 +29,15 @@ export function AuthProvider({ children }) {
 
   const login = useCallback(async (email, password) => {
     const data = await api.auth.login({ email, password });
-    await supabase.auth.setSession(data);
     setUser(data.user);
     return data;
   }, []);
 
   const register = useCallback(async (form) => {
     const data = await api.auth.register(form);
+    if (data.session) {
+      await supabase.auth.setSession(data.session);
+    }
     setUser(data.user);
     return data;
   }, []);

@@ -97,7 +97,7 @@ export default function Home() {
         {/* Fullscreen Background Image (User uploaded a .jpg instead of .mp4) */}
         <img 
           className="hero-video-bg" 
-          src="/bg-video.jpg"
+          src="/bg-video.mp4.jpg"
           alt="Hero Background"
         />
         <div className="hero-video-overlay" />

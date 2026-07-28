@@ -40,6 +40,21 @@ export default function Navbar() {
   useEffect(() => { setMobileOpen(false); }, [location]);
 
   useEffect(() => {
+    if (!dropdownOpen) return;
+    const handleClick = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClick);
+    document.addEventListener('touchstart', handleClick);
+    return () => {
+      document.removeEventListener('mousedown', handleClick);
+      document.removeEventListener('touchstart', handleClick);
+    };
+  }, [dropdownOpen]);
+
+  useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 30);
       const max = document.body.scrollHeight - window.innerHeight;
@@ -75,6 +90,7 @@ export default function Navbar() {
                 <div key="modules" className={styles.dropdownWrapper} ref={dropdownRef}
                   onMouseEnter={() => setDropdownOpen(true)}
                   onMouseLeave={() => setDropdownOpen(false)}
+                  onClick={() => setDropdownOpen(o => !o)}
                 >
                   <span className={`${styles.navLink} ${styles.dropdownToggle}`}>
                     {label} <span className={styles.dropdownArrow}>▾</span>
@@ -101,9 +117,6 @@ export default function Navbar() {
 
           {/* Actions */}
           <div className={styles.actions}>
-            <Link to="/courses" className={`btn btn-ghost btn-sm ${styles.portalBtn}`}>
-              Courses
-            </Link>
             {user ? (
               <>
                 <Link to="/dashboard" className="btn btn-ghost btn-sm">
@@ -188,9 +201,6 @@ export default function Navbar() {
             )
           )}
           <div className={styles.mobileFooterBtns}>
-            <Link to="/courses" className="btn btn-secondary btn-md" style={{ width: '100%', justifyContent: 'center' }} onClick={() => setMobileOpen(false)}>
-              Courses
-            </Link>
             {user ? (
               <>
                 <Link to="/dashboard" className="btn btn-secondary btn-md" style={{ width: '100%', justifyContent: 'center' }} onClick={() => setMobileOpen(false)}>
