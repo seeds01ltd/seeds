@@ -8,12 +8,20 @@ import { Globe } from 'lucide-react';
 import { services as mockServices } from '../data/services';
 import { projects as mockProjects } from '../data/portfolio';
 
+function tryParseJson(val) {
+  if (typeof val !== 'string') return val;
+  if ((val.startsWith('[') && val.endsWith(']')) || (val.startsWith('{') && val.endsWith('}'))) {
+    try { return JSON.parse(val); } catch { return val; }
+  }
+  return val;
+}
+
 function toCamel(row) {
   if (!row || typeof row !== 'object') return row;
   if (Array.isArray(row)) return row.map(toCamel);
   return Object.keys(row).reduce((acc, key) => {
     const camel = key.replace(/_([a-z])/g, (_, c) => c.toUpperCase());
-    acc[camel] = row[key];
+    acc[camel] = tryParseJson(row[key]);
     return acc;
   }, {});
 }
@@ -190,14 +198,56 @@ const api = {
     getLiveClasses:   async (i) => instructorData.getLiveClasses(i),
   },
   auth: {
-    login:         async (c) => authData.login(c.email, c.password),
-    register:      async (c) => authData.register(c),
-    getMe:         async (t) => authData.getMe(t),
-    forgotPassword: async (e) => authData.forgotPassword(e),
-    resetPassword: async (t, p) => authData.resetPassword(t, p),
-    verifyEmail:   async (i) => authData.verifyEmail(i),
-    updateProfile: async (i, u) => authData.updateProfile(i, u),
-    logout:        async () => { await delay(200); return { ok: true }; },
+    login: async ({ email, password }) => {
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) throw new Error(error.message);
+      const profile = await supabase.from('profiles').select('*').eq('id', data.user.id).single();
+      const user = { ...data.user, ...toCamel(profile.data || {}), accessToken: data.session.access_token };
+      return { user, accessToken: data.session.access_token };
+    },
+    register: async ({ name, email, password }) => {
+      const { data, error } = await supabase.auth.signUp({ email, password });
+      if (error) throw new Error(error.message);
+      const avatar = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(name)}&backgroundColor=10b981`;
+      await supabase.from('profiles').insert({
+        id: data.user.id, name, email, avatar, role: 'student', joined: new Date().toISOString().split('T')[0],
+      });
+      const user = { id: data.user.id, name, email, avatar, role: 'student', accessToken: data.session.access_token };
+      return { user, accessToken: data.session.access_token };
+    },
+    getMe: async (token) => {
+      const { data, error } = await supabase.auth.getUser(token);
+      if (error || !data.user) throw new Error('Invalid token');
+      const profile = await supabase.from('profiles').select('*').eq('id', data.user.id).single();
+      return { ...data.user, ...toCamel(profile.data || {}) };
+    },
+    forgotPassword: async (email) => {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: 'https://seeds-lac.vercel.app/reset-password' });
+      if (error) throw new Error(error.message);
+      return { ok: true, message: 'Password reset link sent to your email' };
+    },
+    resetPassword: async (token, password) => {
+      const { error } = await supabase.auth.updateUser({ password });
+      if (error) throw new Error(error.message);
+      return { ok: true, message: 'Password reset successfully' };
+    },
+    verifyEmail: async () => {
+      return { ok: true };
+    },
+    updateProfile: async (id, updates) => {
+      const allowed = ['name', 'avatar', 'role', 'bio'];
+      const filtered = Object.keys(updates).reduce((acc, k) => {
+        if (allowed.includes(k)) acc[k] = updates[k];
+        return acc;
+      }, {});
+      const { data, error } = await supabase.from('profiles').update(filtered).eq('id', id).select().single();
+      if (error) throw new Error(error.message);
+      return toCamel(data);
+    },
+    logout: async () => {
+      await supabase.auth.signOut();
+      return { ok: true };
+    },
   },
   admin: {
     getProfiles: async () => {

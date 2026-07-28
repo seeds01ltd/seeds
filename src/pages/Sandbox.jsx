@@ -152,7 +152,7 @@ export default function Sandbox() {
                           style={{
                             width: '100%', minHeight: 240, padding: '1rem',
                             background: 'transparent', border: 'none',
-                            color: '#e6edf3', fontFamily: "'Fira Code','JetBrains Mono','Cascadia Code',monospace",
+                            color: '#e6edf3',                             fontFamily: "'JetBrains Mono','Fira Code',monospace",
                             fontSize: '0.85rem', lineHeight: 1.6, resize: 'vertical',
                             tabSize: 2,
                           }}
@@ -188,7 +188,7 @@ export default function Sandbox() {
                           </div>
                           <pre style={{
                             background: '#0d1117', padding: '1rem', borderRadius: 'var(--r-md)',
-                            fontFamily: "'Fira Code','JetBrains Mono','Cascadia Code',monospace",
+                            fontFamily: "'JetBrains Mono','Fira Code',monospace",
                             fontSize: '0.82rem', lineHeight: 1.6, color: '#e6edf3', overflow: 'auto',
                             border: '1px solid var(--border)',
                           }}>{task.solution}</pre>
